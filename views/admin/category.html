@@ -1,0 +1,42 @@
+{% extends 'header.html' %}
+{%  block main  %}
+<div class="container-fluid" style="margin-top:50px">
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">分类管理</div>
+        <div class="panel-body">
+                <table class="table table-striped table-hover text-center">
+                        <tr>
+                            <th class="text-center">id</th>
+                            <th class="text-center">分类名称</th>
+                            <th class="text-center">修改/删除</th>
+                        </tr>
+                {% for category in categorys %}
+                
+                            <tr>
+                                <th class="text-center">{{category._id.toString()}}</th>
+                                <th class="text-center unique">{{category.category}}</th>
+                                <th class="text-center"><a class="catagoryChange" href="javascript:;">修改</a>--<a class="catagoryDelet" href="javascript:;">删除</a></th>
+                            </tr>
+
+                {% endfor %}                        
+                     </table>                  
+            <form method="post" action="/admin/category" name="category">  
+                    <div class="form-group form-group1">
+                            <input type="text" class="form-control" name="category">
+                            <p class="warn1" style="margin-top:16px;color:#a94442"></p>
+                    </div>
+                    <button style="margin-top:16px" type="submit" id="add" class="btn btn-default">添加分类</button> 
+            </form>      
+            <div style="margin-top:32px"  class="formedit">  
+                    <div class="form-group form-group2">
+                            <input type="text" id='category-edit' class="form-control" name="category">
+                            <p class="warn2" style="margin-top:16px;color:#a94442"></p>
+                    </div>
+                    <button style="margin-top:16px" type="submit" id="edit" class="btn btn-default">确认修改</button> 
+                </div>      
+        </div>
+
+    </div>
+</div>
+{% endblock %}
