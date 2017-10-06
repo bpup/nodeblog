@@ -3,7 +3,6 @@ var Schema = mongoose.Schema;
 
 var blogCategory= new Schema({
     category:String,
-    id:String,
     date: { type: Date, default: Date.now }
   });
 

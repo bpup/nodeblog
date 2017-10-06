@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>blog</title>
+</head>
+<body>
+ <link href="/css/fonts.css" rel="stylesheet" type="text/css" />
+ <link href="/css/main.css" rel="stylesheet" type="text/css" />
+ <link href="/css/isotope.css" rel="stylesheet" type="text/css" />
+ <link href="/css/mqueries.css" rel="stylesheet" type="text/css" media="screen" />
+ <script src="//unpkg.com/wangeditor/release/wangEditor.min.js"></script>
+
+ <section id="top">
+    <div class="top_inner wrapper clearfix">
+
+        <div class="widget left_float">
+            <h6>点击登陆发布新文章</h6>
+            <div class="textwidget">你可以为其他人点赞或者发表评论</div>
+        </div>
+
+
+        <div class="right_float" id="sign">
+
+            {% if userInfo.username=='admin' %}
+            <span class="admin">
+                            <a href="/admin">
+                                后台管理
+                            </a>
+            </span> {% endif %} {% if userInfo.username %}
+
+            <span class="logout">登出</span>
+
+            <span id="usernamemsg">
+         {{ userInfo.username | '用户'}}
+        </span> {% else %}
+
+            <span class="signin">登陆</span>
+            <span class="signup">注册</span> {% endif %}
+
+        </div>
+</section>
+<form class="signalertin" action="">
+    <header>登陆</header>
+    <main>
+        <label for="usernamein">用户名: <input type="text" name="用户名" id="usernamein"/></label>
+
+        <label for="passwordin">密码:  <input type="password" name="密码" id="passwordin"/></label>
+
+        <button type="submit" id="submitin">登陆</button>
+    </main>
+</form>
+<form class="signalertup" action="">
+    <header>注册</header>
+    <main>
+        <label for="usernameup">用户名: <input type="text" name="用户名" id="usernameup"/></label>
+
+        <label for="passwordup">密码:  <input type="password" name="密码" id="passwordup"/></label>
+
+        <label for="emailup">邮箱:  <input type="text" name="邮箱" id="emailup"/></label>
+
+        <button type="submit" id="submitup">注册</button>
+    </main>
+</form>
+<div class="signmodel"></div>
+<header id="header" class="wrapper">
+        
+                    <div class="header_top clearfix">
+                        <div id="logo" class="left_float">
+                            <a class="logotype" href="/"><img src="../images/logo.png" alt="nodeblog"></a>
+                        </div>
+        
+                        <nav id="nav" class="right_float">
+                            <ul>
+                                <li><a href="http://spar.coding.me/my-resume" class="loadcontent" rel="about">关于我</a></li>
+                                <li><a href="https://github.com/bpup/nodeblog" class="loadcontent" rel="shortcodes">GiTHUB</a></li>
+                            </ul>
+                        </nav>
+        
+                    </div>
+        
+                    <div class="header_tagline">
+        
+                        <h1>node-koa2-mongodb</h1>
+                        <h3>jq+bootstrap版，下一版react</h3>
+        
+                    </div>    
+                </header>
+<div id="blog" class="entry-single pageloader_inner wrapper clearfix">
+    <div id="entry-single">        
+        <aside id="sidebar" class="right_float">
+            <section class="sidebar_section">
+                <div class="entry-headline">
+                    <div class="entry-title"><h4>{{ articel.title }}</h4></div>
+                    <div class="entry-date">{{ articel.date.getMonth()+1}}月, {{articel.date.getDate()}}号{{articel.date.getFullYear()}}年</div>
+                </div>
+                
+                <div class="entry-info">
+                    <p>{{ articel.introduction }}</p>
+                    
+                    <div class="entry-meta">
+                        <div class="meta_views">{{ articel.views+1 }}</div>
+                        <div class="meta_likes"><a href="">{{ articel.likes }}</a></div>
+                        <div class="meta_comments"><a href="">{{ articel.comments.length }}</a></div>
+                        <div class="meta_tags">{{ articel.tags }}</div>
+                    </div>
+                </div>
+                
+            </section>
+            
+        </aside>
+        
+        <article id="maincontent" class="left_float">
+            <div class="article_content add_padding">
+              
+                {{ articel.body  }}       
+        </div>
+        <!-- END .article_content -->
+            {% for comment in articel.comments %}
+            <div id="comments" class="seperator add_padding">
+                <div class="comment">
+                    <div class="user"><img src="/images/avatar{{parseInt(Math.random()*3+1)}}.jpeg" title="Avatar" /></div>
+                    <div class="comment_content">
+                        <h5>{{ comment.username }}</h5>
+                        <div class="comment_date">{{ comment.date }}</div>
+                        <div class="comment_text">
+                        <p>
+                        {{comment.comment}}
+                        </p>
+                        </div>
+                    </div>
+                </div>
+              
+            </div> <!-- END #comments -->
+            {% endfor %}
+            <div id="leave_comment" class="seperator add_padding">
+                <h4 style="margin-bottom:20px">Leave comment</h4>
+                <div id="add_comment" class="checkform">
+                    <div>	<label for="comment_form" class="req">Comment *</label>
+                            <textarea  style="margin-top:20px" name="comment" class="comment_form" onfocus="if (this.value == 'COMMENT *') {this.value = '';}" onblur="if (this.value == '') {this.value = 'COMMENT *';}" rows="15" cols="50">COMMENT *</textarea></div>
+                    <div><input class="submit" type="submit" value="Submit" name="submit_comment" /></div>
+                </div>
+            </div> <!-- END #leave_comment -->
+            
+    </article> <!-- END #maincontent -->
+    
+    </div>        
+</div>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

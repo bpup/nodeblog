@@ -1,186 +1,196 @@
 <!doctype html>
+
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
 
-<!-- scaling not possible (for smartphones, ipad, etc.) -->
-<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <!-- scaling not possible (for smartphones, ipad, etc.) -->
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
 
-<title>node blog</title>
+    <title>node blog</title>
 
-<link href="../css/fonts.css" rel="stylesheet" type="text/css" />
-<link href="../css/main.css" rel="stylesheet" type="text/css" />
-<link href="../css/isotope.css" rel="stylesheet" type="text/css" />
-<link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../css/fonts.css" rel="stylesheet" type="text/css" />
+    <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../css/isotope.css" rel="stylesheet" type="text/css" />
+    <link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen" />
 
-<script src="files/js/jquery.modernizr.min.js"></script>
+    <script src="/js/jquery.modernizr.min.js"></script>
 
 </head>
+
 <body>
-<div id="page">
+    <div id="page">
 
-<section id="top">
-    <div class="top_inner wrapper clearfix">
-            
-            <div class="widget left_float">
-            	<h6>点击登陆发布新文章</h6>			
-                <div class="textwidget">你可以为其他人点赞或者发表评论</div>
-			</div>                
-            
+        <section id="top">
+            <div class="top_inner wrapper clearfix">
 
-            <div class="right_float" id="sign" >
+                <div class="widget left_float">
+                    <h6>点击登陆发布新文章</h6>
+                    <div class="textwidget">你可以为其他人点赞或者发表评论</div>
+                </div>
 
-           {% if userInfo.username=='admin' %}                
-                        <span class="admin">
+
+                <div class="right_float" id="sign">
+
+                    {% if userInfo.username=='admin' %}
+                    <span class="admin">
                                     <a href="/admin">
                                         后台管理
                                     </a>
-                    </span>   
-          {% endif %}
-                    
+                    </span> {% endif %} {% if userInfo.username %}
 
-           {% if userInfo.username %}                
-           
-            <span id="signout">登出</span>
-            
-                <span id="usernamemsg">
+                    <span class="logout">登出</span>
+
+                    <span id="usernamemsg">
                  {{ userInfo.username | '用户'}}
-                </span> 
+                </span> {% else %}
 
-           {% else %}
-                
-            	<span class="signin">登陆</span>
-                <span class="signup">注册</span>
+                    <span class="signin">登陆</span>
+                    <span class="signup">注册</span> {% endif %}
 
-            {% endif %}
-            
-    </div>
-</section> <!-- END top -->
-
-<form class="signalertin" action="">
-        <header>登陆</header>
-        <main>
-            <label for="usernamein">用户名: <input type="text" name="用户名" id="usernamein"/></label>
-         
-            <label for="passwordin">密码:  <input type="password" name="密码" id="passwordin"/></label>                    
-           
-            <button type="submit" id="submitin">登陆</button>
-        </main>
-</form>
-<form class="signalertup" action="">
-        <header>注册</header>
-        <main>
-            <label for="usernameup">用户名: <input type="text" name="用户名" id="usernameup"/></label>
-         
-            <label for="passwordup">密码:  <input type="password" name="密码" id="passwordup"/></label> 
-
-            <label for="emailup">邮箱:  <input type="text" name="邮箱" id="emailup"/></label>                    
-           
-            <button type="submit" id="submitup">注册</button>
-        </main>
-</form>
-<div class="signmodel"></div>
-<header id="header" class="wrapper">
-	
-    <div class="header_top clearfix">
-    	<div id="logo" class="left_float">
-            <a class="logotype" href="/"><img src="../images/logo.png" alt="nodeblog"></a>  
-        </div>
-        
-        <nav id="nav" class="right_float">
-            <ul>
-                <li><a href="http://spar.coding.me/my-resume" class="loadcontent" rel="about">关于我</a></li>
-                <li><a href="https://github.com/bpup/nodeblog" class="loadcontent" rel="shortcodes">GiTHUB</a></li>
-                <li><a href="contact.html" class="loadcontent" rel="contact">Contact</a></li>
-            </ul>
-        </nav>
-        
-    </div>
-    
-    <div class="header_tagline">
-    
-    <h1>node-koa2-mongodb</h1>
-    <h3>原生js版本，下一版react</h3>
-    
-    </div>
-    	
-     
-    
-    <div id="loader">
-        <img src="files/images/loader.gif" alt="loader" title="Ajax loader" />
-    </div>
-    
-    <div id="close">
-    	<a href="">close</a>
-    </div>
- 	
-</header>
-
-     
-<!-- ALL CONTENT WILL BE LOADED IN THIS AREA  -->    
-<section id="pagecontent">
-    <div id="pageloader">        
-            <!-- THE LOADED CONTENT WILL SHOW HERE -->
-    </div> <!-- END #pageloader -->
-</section>    
-<!-- ALL CONTENT WILL BE LOADED IN THIS AREA  -->  
-
-
-<section id="main">
-    <div class="main_inner wrapper clearfix">
-        
-        <ul class="filter">
-            <li><a class="active" href="" data-option-value="*">All</a></li>
-            {% for category in categorys %}
-            <li><a class="active" href="" data-option-value="*">{{category.category}}</a></li>
-            {% endfor %}
-           
-        </ul>
-        
-        
-        <div id="masonry" class="entries clearfix">
-                                
-                <div class="masonry_item entry post">
-                    <div class="img_holder">
-                            <a href="blog-post01.html" rel="Diam nonumy eirmod" class="loadcontent"><img src="files/images/blog/post_01.jpg" alt="Blog Post 01"/></a>
-                        </div>
-                        
-                    <div class="entry-headline">
-                        <div class="entry-title"><h5><a href="blog-post01.html" rel="Diam nonumy eirmod" class="loadcontent">Diam nonumy eirmod</a></h5></div>
-                        <div class="entry-date">November 19</div>
-                    </div>
-                        
-                    <div class="entry-info">
-                        <p>
-                            Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat magna eros eu erat.
-                        </p>
-                        
-                        <div class="entry-meta clearfix">
-                            <div class="meta_views right_float">58</div>
-                            <div class="meta_likes right_float"><a href="blog-post01.html" rel="Diam nonumy eirmod" class="loadcontent">12</a></div>
-                            <div class="meta_comments right_float"><a href="blog-post01.html" rel="Diam nonumy eirmod" class="loadcontent">2</a></div>
-                        </div>
-                    
-                    </div>
                 </div>
-                
-                
-     </div>
-	</div>       
-</section> 
+        </section>
+        <!-- END top -->
 
-</div> <!-- END #page -->
-<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-<script>
-</script>
-<script src="../js/main.js"></script>
-<!-- jquery -->
-<!-- <script src="files/js/jquery-1.7.1.min.js"></script>
-<script src="files/js/jquery.isotope.min.js"></script>
-<script src='files/js/jquery.easing.1.3.js'></script>
-<script src='files/js/jquery.easing.compatibility.js'></script>
-<script src="files/js/loader.js"></script>
-<script src="files/js/script.js"></script> -->
+        <form class="signalertin" action="">
+            <header>登陆</header>
+            <main>
+                <label for="usernamein">用户名: <input type="text" name="用户名" id="usernamein"/></label>
+
+                <label for="passwordin">密码:  <input type="password" name="密码" id="passwordin"/></label>
+
+                <button type="submit" id="submitin">登陆</button>
+            </main>
+        </form>
+        <form class="signalertup" action="">
+            <header>注册</header>
+            <main>
+                <label for="usernameup">用户名: <input type="text" name="用户名" id="usernameup"/></label>
+
+                <label for="passwordup">密码:  <input type="password" name="密码" id="passwordup"/></label>
+
+                <label for="emailup">邮箱:  <input type="text" name="邮箱" id="emailup"/></label>
+
+                <button type="submit" id="submitup">注册</button>
+            </main>
+        </form>
+        <div class="signmodel"></div>
+        <header id="header" class="wrapper">
+
+            <div class="header_top clearfix">
+                <div id="logo" class="left_float">
+                    <a class="logotype" href="/"><img src="../images/logo.png" alt="nodeblog"></a>
+                </div>
+
+                <nav id="nav" class="right_float">
+                    <ul>
+                        <li><a href="http://spar.coding.me/my-resume" class="loadcontent" rel="about">关于我</a></li>
+                        <li><a href="https://github.com/bpup/nodeblog" class="loadcontent" rel="shortcodes">GiTHUB</a></li>
+                    </ul>
+                </nav>
+
+            </div>
+
+            <div class="header_tagline">
+
+                <h1>node-koa2-mongodb</h1>
+                <h3>jq+bootstrap版，下一版react</h3>
+
+            </div>
+
+
+
+        </header>
+
+
+        <!-- ALL CONTENT WILL BE LOADED IN THIS AREA  -->
+        <section id="pagecontent">
+            <div id="pageloader">
+                <!-- THE LOADED CONTENT WILL SHOW HERE -->
+            </div>
+            <!-- END #pageloader -->
+        </section>
+        <!-- ALL CONTENT WILL BE LOADED IN THIS AREA  -->
+
+
+        <section id="main">
+            <div class="main_inner wrapper clearfix">
+
+                <ul class="filter">
+                    <li><a class="active"  data-option-value="*">All</a></li>
+                    {% for category in categorys %}
+                    <li><a data-option-value=".{{category.category}}">{{category.category}}</a></li>
+                    {% endfor %}
+
+                </ul>
+
+                <div id="masonry" class="entries clearfix">
+                 {% for article in articleList %}     
+                    <div class="masonry_item entry post {{article.tags.split(' ')[0]}}">
+                        <div class="img_holder">
+                            <a href="/blog/article?articleid={{ article._id.toString() }}" rel="Diam nonumy eirmod" class="loadcontent"><img src="/images/blogimg1.jpg" alt="Blog Post 01"/></a>
+                        </div>
+
+                        <div class="entry-headline">
+                            <div class="entry-title">
+                                <h5><a href="/blog/article?articleid=+{{ article._id.toString() }}" rel="Diam nonumy eirmod" class="loadcontent">{{ article.title }}</a></h5>
+                            </div>
+                            <div class="entry-date">
+                                {{ article.date.getFullYear()}}年
+                                {{ article.date.getMonth()+1}}月
+                                {{ article.date.getDate()}}号
+
+                            </div>
+                        </div>
+
+                        <div class="entry-info" >
+                            <p>
+                                    {{ article.introduction }}
+                            </p>
+                            <p style="visibility:hidden">{{ article._id.toString() }}</p>
+                            <div class="entry-meta clearfix">
+                                <div class="meta_views right_float"><a>{{ Number(article.views)+1 }}</a></div>
+                                <div class="meta_likes right_float"><a>{{  article.likes }}</a></div>
+                                <div class="meta_comments right_float"><a>{{  article.comments.length }}</a></div>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+                
+
+                </div>
+            </div>
+        </section>
+
+        </div>
+        <!-- END #page -->
+        <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    
+        <script src="../js/main.js"></script>
+        <!-- jquery -->
+        <script src="https://cdn.bootcss.com/jquery.isotope/3.0.4/isotope.pkgd.js"></script>
+        <script>
+            var $container = $('#masonry');
+                $container.isotope({
+                    itemSelector : '.masonry_item'
+                });	
+            $('.filter li a').click(function(e){
+                    
+                    $('.filter li a').removeClass('active');
+                    $(this).addClass('active');
+                    
+                    var selector = $(this).attr('data-option-value');
+                    $container.isotope({ filter: selector });
+                    
+                    e.preventDefault();
+                });
+              
+         
+        </script>
+        <script src='/js/jquery.easing.1.3.js'></script>
+        <script src='/js/jquery.easing.compatibility.js'></script>
+
 
 </body>
-</html>
 
+</html>

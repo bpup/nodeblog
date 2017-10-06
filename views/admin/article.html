@@ -1,0 +1,104 @@
+{% extends 'header.html' %} {% block main %}
+<div class="container-fluid" style="margin-top:50px">
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">文章列表</div>
+        <div class="panel-body">
+            <table class="table table-striped table-hover text-center">
+                <tr>
+                    <th class="text-center">文章标题</th>
+                    <th class="text-center">文章标签</th>
+                    <th class="text-center">点赞数</th>
+                    <th class="text-center">创建时间</th>
+                </tr>
+                {% for article in articles %}
+                <tr>
+                    <th class="text-center">{{article.title}}</th>
+                    <th class="text-center">{{article.tags}}</th>
+                    <th class="text-center">{{article.likes}}</th>
+                    <th class="text-center">{{article.date.toString()}}</th>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="panel-footer">
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous"><a href="/admin?page={{page-1}}"><span aria-hidden="true">&larr;</span> Older</a></li>
+
+                    <li class="info" style="line-height:32px">每页显示 {{limit}} 条，当前第{{page}}页，一共 {{index}} 页</li>
+                    {% if page!=index %}
+                    <li class="next"><a href="/admin?page={{page+1}}">Newer <span aria-hidden="true">&rarr;</span></a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        <form>
+            <div class="form-group title-input" style="margin-top:20px">
+                <label style="margin-left:20px;" for="exampleInputEmail1">文章标题</label>
+                <input type="text" id="articletitle" class="form-control" id="exampleInputEmail1">
+                <p class="warn-title" style="color:#843534;margin-top:20px"></p>
+                </div>
+
+                <label style="margin-left:20px;" for="articletags">文章标签</label>
+                    <input type="text" id="articletags" class="form-control">
+                </div>
+                <label style="margin-left:20px;" for="articleintroduction">文章简介</label>
+                    <input type="text" id="articleintroduction" class="form-control">
+                </div>
+
+
+            <div id="div1" class="toolbar">
+            </div>
+            <div style="padding: 5px 0; color: #ccc"></div>
+            <div id="div2" class="text" style="min-height:500px">
+                <!--可使用 min-height 实现编辑区域自动增加高度-->
+                <p></p>
+            </div>
+            <button id='articlepost' type="submit" class="btn btn-default">Submit</button>
+        </form>
+
+        <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+        <script type="text/javascript">
+            var E = window.wangEditor
+            var editor = new E('#div1', '#div2') // 两个参数也可以传入 elem 对象，class 选择器
+            editor.customConfig.pasteFilterStyle = false
+            editor.create()
+
+            document.querySelector('#articlepost').addEventListener('click', function (e) {
+                var title = $('#articletitle').val();
+                var content = editor.txt.html();
+                var tags =$('#articletags').val();
+                var introduction =$('#articleintroduction').val();
+                e.preventDefault()
+                $('.warn-title').text('')
+                $('.title-input').removeClass('has-error')
+                if (title.trim() == '') {
+                    $('.title-input').addClass('has-error')
+                    $('.warn-title').text('标题不能为空')
+                }
+                $.ajax({
+                    url: '/api/psotarticle',
+                    method: 'POST',
+                    data: {
+                        title: title,
+                        content: content,
+                        tags:tags,
+                        introduction:introduction
+                    },
+                    success: function (res) {
+                        if(res.code==1){
+                            window.location.reload()
+                        }   
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                })
+            })
+        </script>
+
+
+    </div>
+</div>
+{% endblock %}

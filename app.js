@@ -16,6 +16,13 @@ var routerCategory=require('./routers/admin/category')
 var routerCategoryPost=require('./routers/admin/categorypost')
 var routerCategoryEdit=require('./routers/admin/edit')
 var routerCategoryDelet=require('./routers/admin/delet')
+var routerArticle=require('./routers/article')
+var routerAdminAticle=require('./routers/admin/article')
+var routerPostArticle=require('./routers/postarticle')
+var routerLikeAdd=require('./routers/likeadd')
+var routerComments=require('./routers/comments')
+var routerAdminComments=require('./routers/admin/comment')
+var routerCommentsDelet=require('./routers/admin/deletcomment')
 
 //Koa
 //需要引入co-views中间件
@@ -39,6 +46,13 @@ app.use(routerCategory.routes())
 app.use(routerCategoryPost.routes())
 app.use(routerCategoryEdit.routes())
 app.use(routerCategoryDelet.routes())
+app.use(routerArticle.routes())
+app.use(routerAdminAticle.routes())
+app.use(routerPostArticle.routes())
+app.use(routerLikeAdd.routes())
+app.use(routerComments.routes())
+app.use(routerAdminComments.routes())
+app.use(routerCommentsDelet.routes())
 
 
 app.use(serve(path.join(__dirname,'/public')))  //   静态文件，直接读取目录下的文件，访问/css/main.css

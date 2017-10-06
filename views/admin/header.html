@@ -29,7 +29,16 @@
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-
+  <style>
+    .toolbar {
+            border: 1px solid #ccc;
+        }
+        .text {
+            border: 1px solid #ccc;
+            height: 400px;
+        }
+  </style>
+<script src="//unpkg.com/wangeditor/release/wangEditor.min.js"></script>
   <body>
     <!-- 顶部导航 -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -49,7 +58,6 @@
             <li><a href="/admin/article">文章管理</a></li>
             <li><a href="/admin/comments">评论管理</a></li>
             <li><a href="/admin/category">分类管理</a></li>
-            <li><a href="#">设置</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/">博客首页</a></li>

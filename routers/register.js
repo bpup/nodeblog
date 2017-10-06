@@ -23,9 +23,10 @@ async (ctx) => {
      if(userInfo=='has sign'){
        ctx.body={code:0,msg:'用户名已注册'}
      }else{
+       console.log(userInfo,'userinf')
        ctx.cookies.set(
            'cid', 
-           userInfo.cid,
+           userInfo._id,
            {
              maxAge: 60 * 60 * 1000, // cookie有效时长
              expires: new Date('2017-02-15'),  // cookie失效时间

@@ -1,14 +1,15 @@
 
 var User=require('../models/users');
 var blogCategory=require('../models/category');
+var blogArticle=require('../models/article');
 var routerMain =module.exports= require('koa-router')();
 
 
-function unique(arr){
+function unique(arr,condition){
     var map=new Map();
     return arr.filter(
         (a)=>{
-            return !map.has(a.category)&&map.set(a.category,1)
+            return !map.has(a[condition])&&map.set(a[condition],1)
         }
     )
 
@@ -21,14 +22,14 @@ routerMain.get('/',async ctx => {
                 _id:cid
             })
        var getCategory=()=>blogCategory.find()
-
-     await Promise.all([getUser(), getCategory()]).then(function(res){  //并发
-        console.log(res)
+       var getArticleList=()=>blogArticle.find()      
+       await Promise.all([getUser(), getCategory(),getArticleList()]).then(function(res){  //并发
          if(res[1]){
             return ctx.render('index',
             {
              userInfo:res[0],
-             categorys:unique(res[1])
+             categorys:unique(res[1],'category'),
+             articleList:unique(res[2],'title'),
             
             },
             function(err){
